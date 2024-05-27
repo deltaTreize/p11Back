@@ -19,7 +19,7 @@ dbConnection();
 
 
 // Handle CORS issues
-app.use(cors({origin: ['http://localhost:3000', 'https://argentbankbyludovicleblond.vercel.app']}));
+app.use(cors({origin: ['http://localhost:3000']}));
 
 // Request payload middleware
 app.use(express.json( ));

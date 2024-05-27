@@ -11,7 +11,7 @@ const { updateOperationsByName } = require('./operationUpdate');
 dotEnv.config();
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Connect to the database
 dbConnection();
@@ -34,7 +34,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 app.get("/", (req, res) => {
-	res.send("Hello on the ArgentBank DataBase!");
+	res.send(`Server listening on port ${PORT}`);
 });
 
 app.listen(PORT, () => {

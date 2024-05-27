@@ -20,14 +20,12 @@
     "node-pre-gyp": "^0.17.0",
     "nodemailer": "^6.9.13",
     "swagger-ui-express": "^4.1.4",
+    "nodemon": "^2.0.22",
     "yamljs": "^0.3.0"
   },
   "scripts": {
     "dev:server": "nodemon ./server/server.js",
     "populate-db": "node ./server/scripts/populateDatabase.js",
     "server": "node ./server/server.js"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
   }
 }

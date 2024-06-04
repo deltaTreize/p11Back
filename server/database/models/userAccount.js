@@ -8,6 +8,7 @@ const accountSchema = new mongoose.Schema(
 			nbAccount: String, 
 			solde: Number,
       visible: Boolean,
+			cardNumber: String,
 			operations: [Operation.schema],
 		},
 );

@@ -4,7 +4,7 @@ info:
   description: Contains all available API endpoints in this codebase
   version: "1.0.0"
   termsOfService: "http://swagger.io/terms/"
-host: localhost:3001
+host: https://argentbank-bydelta13-api-c9d02df5fde5.herokuapp.com
 basePath: /api/v1
 schemes:
   - http
@@ -180,7 +180,34 @@ paths:
         "200":
           description: add or update descrition successully
           schema:
-            $ref: "#/definitions/description"
+            $ref: "#/definitions/descriptionResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+
+  /user/account/operations/category:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Admin Module
+      summary: User Profile API
+      description: API for add or update descrition of operations
+      parameters:
+        - in: body
+          name: body
+          description: add or update category of operations
+          required: true
+          schema:
+            $ref: "#/definitions/category"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: add or update category successully
+          schema:
+            $ref: "#/definitions/categoryResponse"
         "400":
           description: Invalid Fields
         "500":
@@ -208,6 +235,172 @@ paths:
           description: close account at a user profile successully
           schema:
             $ref: "#/definitions/visible"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+
+/user:
+   get:
+      security:
+        - Bearer: []
+      tags:
+        - Admin Module
+      summary: Retrieve all confirmed user profiles
+      description: API to get all confirmed user profiles
+      parameters:
+        - in: header
+          name: id
+          description: ID of the admin
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Successfully retrieved user profiles
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        "401":
+          description: Unauthorized, admin not found
+        "404":
+          description: No users found
+        "500":
+          description: Internal Server Error
+
+/user/admin:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Admin Module
+      summary: User Profile API
+      description: API for pagination of user profiles
+      parameters:
+        - in: body
+          name: body
+          description: pagination of user profiles
+          required: true
+          schema:
+            $ref: "#/definitions/pagination"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: pagination successully
+          schema:
+            $ref: "#/definitions/paginationResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+
+/user/budget:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for add or update budget
+      parameters:
+        - in: body
+          name: body
+          description: add or update budget
+          required: true
+          schema:
+            $ref: "#/definitions/budget"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: add or update budget successully
+          schema:
+            $ref: "#/definitions/budgetResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+
+/user/beneficiaires:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for add beneficiaires
+      parameters:
+        - in: body
+          name: body
+          description: add beneficiaires
+          required: true
+          schema:
+            $ref: "#/definitions/beneficiaires"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: add beneficiaires successully
+          schema:
+            $ref: "#/definitions/beneficiairesResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+
+/user/beneficiaires:
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for delete beneficiaire
+      parameters:
+        - in: body
+          name: body
+          description: delete beneficiaire
+          required: true
+          schema:
+            $ref: "#/definitions/deleteBeneficiaires"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: delete beneficiaire successully
+          schema:
+            $ref: "#/definitions/deleteBeneficiairesResponse"
+        "400":
+          description: Invalid Fields
+        "500":
+          description: Internal Server Error
+
+/user/beneficiaires/modifier:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for update beneficiaire
+      parameters:
+        - in: body
+          name: body
+          description: update beneficiaire
+          required: true
+          schema:
+            $ref: "#/definitions/updateBeneficiaires"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: update beneficiaire successully
+          schema:
+            $ref: "#/definitions/updateBeneficiairesResponse"
         "400":
           description: Invalid Fields
         "500":
@@ -286,11 +479,54 @@ definitions:
     properties:
       description:
         type: string
+  category:
+    type: object
+    properties:
+      category:
+        type: string
   visible:
     type: object
     properties:
       visible:
         type: boolean
+  pagination:
+    type: object
+    properties:
+      page:
+        type: number
+      limit:
+        type: number
+  budget:
+    type: object
+    properties:
+      budgetCategory:
+        type: string
+      value:
+        type: number
+  beneficiaires:
+    type: object
+    properties:
+      name:
+        type: string
+      rib:
+        type: string
+  deleteBeneficiaires:
+    type: object
+    properties:
+      id:
+        type: string
+      iban:
+        type: string
+  updateBeneficiaires:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      rib:
+        type: string
+
 
   UserResponse:
     type: object
@@ -350,3 +586,98 @@ definitions:
             type: string
           montant:
             type: number
+    descriptionResponse:
+      type: string
+        properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          description:
+            type: string
+    categoryResponse:
+      type: string
+        properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          category:
+            type: string
+    paginationResponse:
+      type: string
+        properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          page:
+            type: number
+          limit:
+            type: number
+    budgetResponse:
+      type: string
+        properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          budgetCategory:
+            type: string
+          value:
+            type: number
+    beneficiairesResponse:
+      type: string
+        properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+          rib:
+            type: string
+    deleteBeneficiairesResponse:
+      type: string
+        properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+          iban:
+            type: string
+    updateBeneficiairesResponse:
+      type: string
+        properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+          rib:
+            type: string
+

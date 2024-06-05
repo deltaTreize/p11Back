@@ -7,7 +7,7 @@ info:
 host: "argentbank-bydelta13-api-c9d02df5fde5.herokuapp.com"
 basePath: /api/v1
 schemes: [
-  "https"
+  http
   ]
 
 paths:

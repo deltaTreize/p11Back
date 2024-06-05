@@ -4,7 +4,7 @@ info:
   description: Contains all available API endpoints in this codebase
   version: "1.0.0"
   termsOfService: "http://swagger.io/terms/"
-host: https://argentbank-bydelta13-api-c9d02df5fde5.herokuapp.com
+host: "https://argentbank-bydelta13-api-c9d02df5fde5.herokuapp.com"
 basePath: /api/v1
 schemes:
   - http

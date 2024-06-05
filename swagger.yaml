@@ -586,9 +586,9 @@ definitions:
             type: string
           montant:
             type: number
-    descriptionResponse:
-      type: string
-        properties:
+  descriptionResponse:
+    type: string
+    properties:
       status:
         type: integer
       message:
@@ -598,9 +598,9 @@ definitions:
         properties:
           description:
             type: string
-    categoryResponse:
-      type: string
-        properties:
+  categoryResponse:
+    type: string
+    properties:
       status:
         type: integer
       message:
@@ -610,9 +610,9 @@ definitions:
         properties:
           category:
             type: string
-    paginationResponse:
-      type: string
-        properties:
+  paginationResponse:
+    type: string
+    properties:
       status:
         type: integer
       message:
@@ -624,9 +624,9 @@ definitions:
             type: number
           limit:
             type: number
-    budgetResponse:
-      type: string
-        properties:
+  budgetResponse:
+    type: string
+    properties:
       status:
         type: integer
       message:
@@ -638,9 +638,9 @@ definitions:
             type: string
           value:
             type: number
-    beneficiairesResponse:
-      type: string
-        properties:
+  beneficiairesResponse:
+    type: string
+    properties:
       status:
         type: integer
       message:
@@ -652,9 +652,9 @@ definitions:
             type: string
           rib:
             type: string
-    deleteBeneficiairesResponse:
-      type: string
-        properties:
+  deleteBeneficiairesResponse:
+    type: string
+    properties:
       status:
         type: integer
       message:
@@ -666,9 +666,9 @@ definitions:
             type: string
           iban:
             type: string
-    updateBeneficiairesResponse:
-      type: string
-        properties:
+  updateBeneficiairesResponse:
+    type: string
+    properties:
       status:
         type: integer
       message:

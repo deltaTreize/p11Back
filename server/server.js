@@ -18,17 +18,8 @@ const PORT = process.env.PORT || 3001;
 dbConnection();
 // updateOperationsByName();
 
-
 // Handle CORS issues
-app.use(cors({
-  origin: (origin, callback) => {
-    if (origin === 'http://localhost:3000' || vercelRegex.test(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
+cors({origin: ['http://localhost:3000', "https://p11-three.vercel.app", "https://argentbank-bydelta13-api-c9d02df5fde5.herokuapp.com/"]})
 
 // Request payload middleware
 app.use(express.json( ));

@@ -240,7 +240,7 @@ paths:
         "500":
           description: Internal Server Error
 
-/user:
+  /user:
    get:
       security:
         - Bearer: []
@@ -271,7 +271,7 @@ paths:
         "500":
           description: Internal Server Error
 
-/user/admin:
+  /user/admin:
     put:
       security:
         - Bearer: []
@@ -298,7 +298,7 @@ paths:
         "500":
           description: Internal Server Error
 
-/user/budget:
+  /user/budget:
     put:
       security:
         - Bearer: []
@@ -325,7 +325,7 @@ paths:
         "500":
           description: Internal Server Error
 
-/user/beneficiaires:
+  /user/beneficiaires:
     put:
       security:
         - Bearer: []
@@ -352,7 +352,7 @@ paths:
         "500":
           description: Internal Server Error
 
-/user/beneficiaires:
+  /user/beneficiaires:
     delete:
       security:
         - Bearer: []
@@ -379,7 +379,7 @@ paths:
         "500":
           description: Internal Server Error
 
-/user/beneficiaires/modifier:
+  /user/beneficiaires/modifier:
     put:
       security:
         - Bearer: []

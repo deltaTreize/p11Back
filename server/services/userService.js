@@ -388,7 +388,7 @@ module.exports.getAllProfilePagined = async (req, res) => {
 		const Admin = await User.findOne({ _id: idAdmin, role: "admin" });
 		if (Admin) {
 			let page = 1;
-			let limit = 100;
+			let limit = req.query.limit;
 			let query = { role: "user", confirmed: true };
 
 			if (req.query.page) {

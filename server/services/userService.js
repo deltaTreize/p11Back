@@ -412,7 +412,7 @@ module.exports.getAllProfilePagined = async (req, res) => {
 				.sort({ [sortBy]: sortOrder === "desc" ? -1 : 1 })
 				.skip((page - 1) * limit)
 				.limit(limit);
-				return res.status(200).json({ users: users.map(user => user.toObject()), totalPages: totalPages });
+				return ({ users: users.map(user => user.toObject()), totalPages: totalPages });
 		}
 
 		if (!users || users.length === 0) {

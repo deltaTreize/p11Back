@@ -412,8 +412,7 @@ module.exports.getAllProfilePagined = async (req, res) => {
 			const users = await User.find(query)
 				.sort({ [sortBy]: sortOrder === "desc" ? -1 : 1 })
 				.skip((page - 1) * limit)
-				.limit(limit)
-				.lean();
+				.limit(limit);
 		}
 
 		if (!users || users.length === 0) {

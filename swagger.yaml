@@ -193,7 +193,7 @@ paths:
       tags:
         - Admin Module
       summary: User Profile API
-      description: API for add or update descrition of operations
+      description: API for add or update category of operations
       parameters:
         - in: body
           name: body

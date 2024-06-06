@@ -406,17 +406,29 @@ module.exports.getAllProfilePagined = async (req, res) => {
 
 			const sortBy = req.query.sortBy || "name"; // Par défaut, tri par nom
 			const sortOrder = req.query.sortOrder || "asc"; // Par défaut, tri ascendant
+			const totalUsers = await User.countDocuments(query);
+			const totalPages = Math.ceil(totalUsers / limit);
 
 			const users = await User.find(query)
 				.sort({ [sortBy]: sortOrder === "desc" ? -1 : 1 })
 				.skip((page - 1) * limit)
-				.limit(limit);
-			return users.map((user) => user.toObject());
+				.limit(limit)
+				.lean();
 		}
 
 		if (!users || users.length === 0) {
 			throw new Error("Aucun utilisateur trouvé!");
 		}
+
+		const response = {
+			users: users,
+			totalPages: totalPages,
+			currentPage: page,
+			limit: limit,
+			dots: Array(totalPages).fill('.')
+		};
+
+		return res.status(200).json(response);
 	} catch (error) {
 		console.error("Error in userService.js", error);
 		throw new Error(error);

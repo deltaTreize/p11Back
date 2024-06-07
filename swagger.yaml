@@ -587,7 +587,7 @@ definitions:
           montant:
             type: number
   descriptionResponse:
-    type: string
+    type: object
     properties:
       status:
         type: integer
@@ -599,7 +599,7 @@ definitions:
           description:
             type: string
   categoryResponse:
-    type: string
+    type: object
     properties:
       status:
         type: integer
@@ -611,7 +611,7 @@ definitions:
           category:
             type: string
   paginationResponse:
-    type: string
+    type: object
     properties:
       status:
         type: integer
@@ -625,7 +625,7 @@ definitions:
           limit:
             type: number
   budgetResponse:
-    type: string
+    type: object
     properties:
       status:
         type: integer
@@ -639,7 +639,7 @@ definitions:
           value:
             type: number
   beneficiairesResponse:
-    type: string
+    type: object
     properties:
       status:
         type: integer
@@ -653,7 +653,7 @@ definitions:
           rib:
             type: string
   deleteBeneficiairesResponse:
-    type: string
+    type: object
     properties:
       status:
         type: integer
@@ -667,7 +667,7 @@ definitions:
           iban:
             type: string
   updateBeneficiairesResponse:
-    type: string
+    type: object
     properties:
       status:
         type: integer

@@ -196,6 +196,7 @@ module.exports.addOperation = async (serviceData) => {
 		const newOperation = new Operation({
 			date: serviceData.body.date,
 			title: serviceData.body.title,
+			category: serviceData.body.category,
 			description: serviceData.body.description,
 			montant: serviceData.body.montant,
 		});

@@ -152,25 +152,9 @@ module.exports.updateCategory = async (req, res) => {
 
   return res.status(response.status).send(response)
 }
-module.exports.updateBeneficiaire = async (req, res) => {
-  let response = {}
-
-  try {
-    const responseFromService = await userService.updateBeneficiaire(req)
-    response.status = 200
-    response.message = 'Successfully updated beneficiaire'
-    response.body = responseFromService
-  } catch (error) {
-    console.log('Error in updateUserProfile - userController.js')
-    response.status = 400
-    response.message = error.message
-  }
-
-  return res.status(response.status).send(response)
-}
 module.exports.updateBudget = async (req, res) => {
   let response = {}
-
+  
   try {
     const responseFromService = await userService.updateBudget(req)
     response.status = 200
@@ -181,16 +165,32 @@ module.exports.updateBudget = async (req, res) => {
     response.status = 400
     response.message = error.message
   }
-
+  
   return res.status(response.status).send(response)
 }
 module.exports.addAccount = async (req, res) => {
   let response = {}
-
+  
   try {
     const responseFromService = await userService.addAccount(req)
     response.status = 200
     response.message = 'Successfully create a new account'
+    response.body = responseFromService
+  } catch (error) {
+    console.log('Error in updateUserProfile - userController.js')
+    response.status = 400
+    response.message = error.message
+  }
+  
+  return res.status(response.status).send(response)
+}
+module.exports.updateBeneficiaire = async (req, res) => {
+  let response = {}
+
+  try {
+    const responseFromService = await userService.updateBeneficiaire(req)
+    response.status = 200
+    response.message = 'Successfully updated beneficiaire'
     response.body = responseFromService
   } catch (error) {
     console.log('Error in updateUserProfile - userController.js')
@@ -223,6 +223,54 @@ module.exports.deleteBeneficiaire = async (req, res) => {
     const responseFromService = await userService.deleteBeneficiaire(req)
     response.status = 200
     response.message = 'Successfully delete beneficiaire'
+    response.body = responseFromService
+  } catch (error) {
+    console.log('Error in updateUserProfile - userController.js')
+    response.status = 400
+    response.message = error.message
+  }
+
+  return res.status(response.status).send(response)
+}
+module.exports.updateCategoryInArray = async (req, res) => {
+  let response = {}
+
+  try {
+    const responseFromService = await userService.updateCategoryInArray(req)
+    response.status = 200
+    response.message = 'Successfully updated Category'
+    response.body = responseFromService
+  } catch (error) {
+    console.log('Error in updateUserProfile - userController.js')
+    response.status = 400
+    response.message = error.message
+  }
+
+  return res.status(response.status).send(response)
+}
+module.exports.addCategory = async (req, res) => {
+  let response = {}
+
+  try {
+    const responseFromService = await userService.addCategory(req)
+    response.status = 200
+    response.message = 'Successfully create a new Category'
+    response.body = responseFromService
+  } catch (error) {
+    console.log('Error in updateUserProfile - userController.js')
+    response.status = 400
+    response.message = error.message
+  }
+
+  return res.status(response.status).send(response)
+}
+module.exports.deleteCategory = async (req, res) => {
+  let response = {}
+
+  try {
+    const responseFromService = await userService.deleteCategory(req)
+    response.status = 200
+    response.message = 'Successfully delete Category'
     response.body = responseFromService
   } catch (error) {
     console.log('Error in updateUserProfile - userController.js')

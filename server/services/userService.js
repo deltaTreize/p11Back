@@ -108,6 +108,7 @@ module.exports.updateUserProfile = async (serviceData) => {
 		throw new Error(error);
 	}
 };
+
 module.exports.addAccount = async (serviceData) => {
 	try {
 		const jwtToken = serviceData.headers.authorization
@@ -134,6 +135,7 @@ module.exports.addAccount = async (serviceData) => {
 		throw new Error(error);
 	}
 };
+
 module.exports.addBeneficiaire = async (serviceData) => {
 	try {
 		const jwtToken = serviceData.headers.authorization
@@ -157,6 +159,7 @@ module.exports.addBeneficiaire = async (serviceData) => {
 		throw new Error(error);
 	}
 };
+
 module.exports.deleteBeneficiaire = async (serviceData) => {
 	try {
 		const jwtToken = serviceData.headers.authorization
@@ -177,6 +180,120 @@ module.exports.deleteBeneficiaire = async (serviceData) => {
 			throw new Error("Bénéficiaire non trouvé");
 		}
 		await user.save();
+		return user.toObject();
+	} catch (error) {
+		console.error("Error in userService.js", error);
+		throw new Error(error);
+	}
+};
+
+module.exports.updateBeneficiaire = async (serviceData) => {
+	try {
+		const jwtToken = serviceData.headers.authorization
+			.split("Bearer")[1]
+			.trim();
+		const decodedJwtToken = jwt.decode(jwtToken);
+		const userId = serviceData.headers.id;
+		const rib = serviceData.headers.rib;
+		const user = await User.findById(userId);
+
+		if (!user) {
+			throw new Error("User not found");
+		}
+		const beneficiaireIndex = user.beneficiairesExternes.findIndex(
+			(data) => data.rib === rib
+		);
+
+		if (beneficiaireIndex === -1) {
+			throw new Error("Account not found");
+		}
+
+		user.beneficiairesExternes[beneficiaireIndex].name = serviceData.body.name;
+		user.beneficiairesExternes[beneficiaireIndex].rib = serviceData.body.rib;
+
+		await user.save();
+
+		return user.toObject();
+	} catch (error) {
+		console.error("Error in userService.js", error);
+		throw new Error(error);
+	}
+};
+module.exports.addCategory = async (serviceData) => {
+	try {
+		const jwtToken = serviceData.headers.authorization
+			.split("Bearer")[1]
+			.trim();
+		const decodedJwtToken = jwt.decode(jwtToken);
+		const userId = serviceData.headers.id;
+		const newCategory = new Category({
+			name: serviceData.body.name,
+		});
+		const user = await User.findByIdAndUpdate(
+			userId,
+			{ $push: { category: newCategory } },
+			{ new: true }
+		);
+
+		return user.toObject();
+	} catch (error) {
+		console.error("Error in userService.js", error);
+		throw new Error(error);
+	}
+};
+
+module.exports.deleteCategory = async (serviceData) => {
+	try {
+		const jwtToken = serviceData.headers.authorization
+			.split("Bearer")[1]
+			.trim();
+		const decodedJwtToken = jwt.decode(jwtToken);
+		const userId = serviceData.headers.id;
+		const name = serviceData.headers.name;
+
+		const user = await User.findById(userId);
+		const categoryIndex = user.category.findIndex(
+			(data) => data.name === name
+		);
+
+		if (categoryIndex > -1) {
+			user.category.splice(categoryIndex, 1);
+		} else {
+			throw new Error("Bénéficiaire non trouvé");
+		}
+		await user.save();
+		return user.toObject();
+	} catch (error) {
+		console.error("Error in userService.js", error);
+		throw new Error(error);
+	}
+};
+
+module.exports.updateCategoryInArray = async (serviceData) => {
+	try {
+		const jwtToken = serviceData.headers.authorization
+			.split("Bearer")[1]
+			.trim();
+		const decodedJwtToken = jwt.decode(jwtToken);
+		const userId = serviceData.headers.id;
+		const name = serviceData.headers.name;
+		const user = await User.findById(userId);
+
+		if (!user) {
+			throw new Error("User not found");
+		}
+		const categoryIndex = user.category.findIndex(
+			(data) => data.name === name
+		);
+
+		if (categoryIndex === -1) {
+			throw new Error("Account not found");
+		}
+
+		user.category[categoryIndex].name = serviceData.body.name;
+
+		await user.save();
+
 		return user.toObject();
 	} catch (error) {
 		console.error("Error in userService.js", error);
@@ -261,6 +378,7 @@ module.exports.updateDescription = async (serviceData) => {
 		throw new Error(error);
 	}
 };
+
 module.exports.updateCategory = async (serviceData) => {
 	try {
 		const jwtToken = serviceData.headers.authorization
@@ -303,38 +421,7 @@ module.exports.updateCategory = async (serviceData) => {
 		throw new Error(error);
 	}
 };
-module.exports.updateBeneficiaire = async (serviceData) => {
-	try {
-		const jwtToken = serviceData.headers.authorization
-			.split("Bearer")[1]
-			.trim();
-		const decodedJwtToken = jwt.decode(jwtToken);
-		const userId = serviceData.headers.id;
-		const rib = serviceData.headers.rib;
-		const user = await User.findById(userId);
 
-		if (!user) {
-			throw new Error("User not found");
-		}
-		const beneficiaireIndex = user.beneficiairesExternes.findIndex(
-			(data) => data.rib === rib
-		);
-
-		if (beneficiaireIndex === -1) {
-			throw new Error("Account not found");
-		}
-
-		user.beneficiairesExternes[beneficiaireIndex].name = serviceData.body.name;
-		user.beneficiairesExternes[beneficiaireIndex].rib = serviceData.body.rib;
-
-		await user.save();
-
-		return user.toObject();
-	} catch (error) {
-		console.error("Error in userService.js", error);
-		throw new Error(error);
-	}
-};
 module.exports.updateBudget = async (serviceData) => {
 	try {
 		const jwtToken = serviceData.headers.authorization
@@ -365,6 +452,7 @@ module.exports.updateBudget = async (serviceData) => {
 		throw new Error(error);
 	}
 };
+
 module.exports.getAllProfile = async (req, res) => {
 	try {
 		const idAdmin = req.headers.id;
@@ -383,6 +471,7 @@ module.exports.getAllProfile = async (req, res) => {
 		throw new Error(error);
 	}
 };
+
 module.exports.getAllProfilePagined = async (req, res) => {
 	try {
 		const idAdmin = req.headers.id;

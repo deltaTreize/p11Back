@@ -72,6 +72,22 @@ router.put(
 	tokenValidation.validateToken,
 	userController.updateBeneficiaire
 )
+router.put(
+	"/category",
+	tokenValidation.validateToken,
+	userController.addCategory
+)
+router.delete(
+	"/category",
+	tokenValidation.validateToken,
+	userController.deleteCategory
+)
+
+router.put(
+	"/category/modifier",
+	tokenValidation.validateToken,
+	userController.updateCategoryInArray
+)
 
 // const User = require("../database/models/userModel");
 // const Operation = require("../database/models/userOperation");

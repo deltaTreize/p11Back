@@ -277,7 +277,7 @@ module.exports.updateCategoryInArray = async (serviceData) => {
 			.trim();
 		const decodedJwtToken = jwt.decode(jwtToken);
 		const userId = serviceData.headers.id;
-		const oldName = serviceData.headers.oldName;
+		const oldName = serviceData.headers.name;
 		const user = await User.findById(userId);
 
 		if (!user) {

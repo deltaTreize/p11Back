@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Account = require("./userAccount");
 const Budget = require("./userBudget");
 const Beneficiaires = require("./userBeneficiaires");
+const Category = require("./userCategory");
 
 const userSchema = new mongoose.Schema(
 	{
@@ -16,6 +17,7 @@ const userSchema = new mongoose.Schema(
 		account: [Account.schema],
 		budget: [Budget.schema],
 		beneficiairesExternes: [Beneficiaires.schema],
+		category: [Category.schema],
 	},
 	{
 		timestamps: true,

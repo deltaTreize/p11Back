@@ -284,7 +284,7 @@ module.exports.updateCategoryInArray = async (serviceData) => {
 			throw new Error("User not found");
 		}
 		const categoryIndex = user.category.findIndex(
-			(data) => data.name === name
+			(data) => data.name === oldName
 		);
 
 		if (categoryIndex === -1) {

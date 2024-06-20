@@ -2,6 +2,7 @@ const User = require("../database/models/userModel");
 const Account = require("../database/models/userAccount");
 const Operation = require("../database/models/userOperation");
 const Beneficiaire = require("../database/models/userBeneficiaires");
+const Category 	= require("../database/models/userCategory");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { sendConfirmationEmail } = require("../services/emailService");

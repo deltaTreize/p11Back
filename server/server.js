@@ -53,6 +53,6 @@ app.get("/", (req, res) => {
 
 // Lancer un serveur HTTP (port 80) pour rediriger vers HTTPS
 const http = require("http");
-http.createServer(app).listen(80, () => {
-  console.log(`HTTP Server listening on http://localhost:${PORT}`);
+http.createServer(app).listen(3001, '0.0.0.0', () => {
+  console.log(`HTTP Server listening on http://0.0.0.0:3001`);
 });

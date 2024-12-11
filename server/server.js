@@ -11,29 +11,25 @@ dotEnv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Connect to the database
+// Connexion à la base de données
 dbConnection();
 
-// Convertir ADRESS_AUTORISED en tableau
-const allowedOrigins = [
-  "http://localhost:3000",  // Localhost (pour le développement)
-  "https://p11-three.vercel.app",  // Frontend sur Vercel
-  // Ajoute d'autres origins autorisées si nécessaire
-];
+// Charger les origines autorisées à partir de l'environnement
+const allowedOrigins = process.env.ADRESS_AUTORISED.split(',');
 
-// Configuration CORS
+// Configuration de CORS pour accepter les origines spécifiées dans le .env
 app.use(cors({
   origin: function (origin, callback) {
-    console.log("CORS Origin:", origin);  // Journalisation pour debug
+    console.log("CORS Origin:", origin); // Journalisation pour debug
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);  // Accepter l'origine
+      callback(null, true); // Accepter l'origine
     } else {
-      callback(new Error('Not allowed by CORS'));  // Refuser l'origine
+      callback(new Error('Not allowed by CORS')); // Refuser l'origine
     }
   }
 }));
 
-// Rediriger HTTP vers HTTPS
+// Redirection HTTP vers HTTPS
 app.use((req, res, next) => {
   if (req.protocol === 'http') {
     return res.redirect(301, `https://${req.headers.host}${req.url}`);
@@ -41,22 +37,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// Request payload middleware
+// Middleware pour gérer le payload des requêtes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Handle custom routes
+// Définir les routes
 app.use("/api/v1/user", require("./routes/userRoutes"));
 
-// API Documentation
+// Documentation de l'API
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get("/", (req, res) => {
   res.send(`Server listening on port ${PORT}`);
 });
 
-// Lancer un serveur HTTP (port 80)
+// Lancer un serveur HTTP (port 80) pour rediriger vers HTTPS
 const http = require("http");
-http.createServer(app).listen(PORT, () => {
+http.createServer(app).listen(80, () => {
   console.log(`HTTP Server listening on http://localhost:${PORT}`);
 });

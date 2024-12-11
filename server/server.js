@@ -15,28 +15,40 @@ const PORT = process.env.PORT || 3001;
 dbConnection();
 
 // Convertir ADRESS_AUTORISED en tableau
-const allowedOrigins = process.env.ADRESS_AUTORISED.split(',');
+const allowedOrigins = [
+  "http://localhost:3000",  // Localhost (pour le développement)
+  "https://p11-three.vercel.app",  // Frontend sur Vercel
+  // Ajoute d'autres origins autorisées si nécessaire
+];
 
-// Gérer CORS
+// Configuration CORS
 app.use(cors({
   origin: function (origin, callback) {
-    console.log("CORS Origin:", origin); // Journalisation pour debug
+    console.log("CORS Origin:", origin);  // Journalisation pour debug
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); // Accepter l'origine
+      callback(null, true);  // Accepter l'origine
     } else {
-      callback(new Error('Not allowed by CORS')); // Refuser
+      callback(new Error('Not allowed by CORS'));  // Refuser l'origine
     }
   }
 }));
 
-// Middleware pour traiter le corps des requêtes
+// Rediriger HTTP vers HTTPS
+app.use((req, res, next) => {
+  if (req.protocol === 'http') {
+    return res.redirect(301, `https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
+
+// Request payload middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes personnalisées
+// Handle custom routes
 app.use("/api/v1/user", require("./routes/userRoutes"));
 
-// Documentation de l'API
+// API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get("/", (req, res) => {
@@ -44,6 +56,7 @@ app.get("/", (req, res) => {
 });
 
 // Lancer un serveur HTTP (port 80)
-app.listen(PORT, () => {
+const http = require("http");
+http.createServer(app).listen(PORT, () => {
   console.log(`HTTP Server listening on http://localhost:${PORT}`);
 });

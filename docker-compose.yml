@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: argent-bank-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MONGO_URI=${MONGO_URI}
+      - NODE_ENV=${NODE_ENV}
+      # Ajoutez d'autres variables d'environnement nécessaires ici
+    depends_on:
+      - mongo
+    networks:
+      - argent-bank-network
+
+  mongo:
+    image: mongo:5.0
+    container_name: argent-bank-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - argent-bank-network
+
+networks:
+  argent-bank-network:
+    driver: bridge
+
+volumes:
+  mongo_data:

@@ -19,9 +19,9 @@ dbConnection();
 // updateOperationsByName();
 
 // Handle CORS issues
-app.use(cors({origin: ['http://localhost:3000', "https://p11-three.vercel.app", "https://argentbank-bydelta13-api-c9d02df5fde5.herokuapp.com", vercelRegex]}));
+app.use(cors({origin: [process.env.ADRESS_AUTORISED, vercelRegex]}));
 
-// Request payload middleware
+// Request payload middleware 
 app.use(express.json( ));
 app.use(express.urlencoded({ extended: true }));
 

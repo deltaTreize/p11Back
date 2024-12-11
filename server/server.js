@@ -23,6 +23,7 @@ const allowedOrigins = process.env.ADRESS_AUTORISED.split(',');
 
 app.use(cors({
   origin: function (origin, callback) {
+		console.log("CORS Origin:", origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {

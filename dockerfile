@@ -14,4 +14,4 @@ RUN npm install
 EXPOSE 3001
 
 # Lancer l'application
-CMD ["node", "server.js"]
+CMD ["npm", "run", "server"]

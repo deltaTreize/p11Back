@@ -1,20 +1,17 @@
-# Étape 1 : Utiliser une image Node.js officielle
-FROM node:18-alpine
+# Utilise une image de base officielle Node.js
+FROM node:16
 
-# Étape 2 : Définir le répertoire de travail dans le conteneur
+# Crée un répertoire de travail dans le conteneur
 WORKDIR /usr/src/app
 
-# Étape 3 : Copier le fichier package.json et package-lock.json (si disponible)
-COPY package*.json ./
-
-# Étape 4 : Installer les dépendances
-RUN npm install --production
-
-# Étape 5 : Copier tout le contenu de votre projet dans le conteneur
+# Copie les fichiers de ton application dans le conteneur
 COPY . .
 
-# Étape 6 : Exposer le port sur lequel votre application écoute
+# Installe les dépendances
+RUN npm install
+
+# Expose le port 3001
 EXPOSE 3001
 
-# Étape 7 : Définir la commande pour démarrer l'application
-CMD ["npm", "run", "server"]
+# Lancer l'application
+CMD ["node", "server.js"]

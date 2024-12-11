@@ -29,14 +29,6 @@ app.use(cors({
   }
 }));
 
-// Redirection HTTP vers HTTPS
-app.use((req, res, next) => {
-  if (req.protocol === 'http') {
-    return res.redirect(301, `https://${req.headers.host}${req.url}`);
-  }
-  next();
-});
-
 // Middleware pour gérer le payload des requêtes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -51,8 +43,7 @@ app.get("/", (req, res) => {
   res.send(`Server listening on port ${PORT}`);
 });
 
-// Lancer un serveur HTTP (port 80) pour rediriger vers HTTPS
-const http = require("http");
-http.createServer(app).listen(3001, '0.0.0.0', () => {
-  console.log(`HTTP Server listening on http://0.0.0.0:3001`);
+// Lancer un serveur (Node.js va écouter sur le port 3001)
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });

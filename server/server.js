@@ -6,7 +6,7 @@ const yaml = require("yamljs");
 const swaggerDocs = yaml.load("./swagger.yaml");
 const dbConnection = require("./database/connection");
 const { updateOperationsByName } = require('./operationUpdate');
-const vercelRegex = /^https:\/\/.*\.vercel\.app$/;
+const vercelRegex = /https:\/\/.*\.vercel\.app/;
 
 
 dotEnv.config();
@@ -19,8 +19,17 @@ dbConnection();
 // updateOperationsByName();
 
 // Handle CORS issues
-app.use(cors({origin: [process.env.ADRESS_AUTORISED, vercelRegex]}));
+const allowedOrigins = process.env.ADRESS_AUTORISED.split(',');
 
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'), false);
+    }
+  }
+}));
 // Request payload middleware 
 app.use(express.json( ));
 app.use(express.urlencoded({ extended: true }));

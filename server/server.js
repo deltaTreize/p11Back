@@ -6,7 +6,7 @@ const yaml = require("yamljs");
 const swaggerDocs = yaml.load("./swagger.yaml");
 const dbConnection = require("./database/connection");
 const { updateOperationsByName } = require('./operationUpdate');
-const vercelRegex = /https:\/\/.*\.vercel\.app/;
+const vercelRegex = /^https:\/\/.*\.vercel\.app$/;
 
 
 dotEnv.config();
